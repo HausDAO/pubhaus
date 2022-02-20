@@ -21,7 +21,6 @@ const PageLayout = styled.main`
 
 const Posts = ({ pageContext }) => {
   const { posts } = pageContext;
-
   return (
     <PageLayout>
       <ul>

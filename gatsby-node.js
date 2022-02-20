@@ -3,6 +3,7 @@ const path = require(`path`);
 const { gql } = require('apollo-boost');
 const ApolloClient = require('apollo-boost').default;
 const fetch = require('cross-fetch');
+const Web3Utils = require('web3-utils');
 
 const GRAPH_URI =
   'https://api.thegraph.com/subgraphs/name/odyssy-automaton/daohaus-poster-rinkeby';
@@ -44,10 +45,16 @@ exports.createPages = async ({ actions }) => {
   const postsPage = path.resolve('./src/templates/Posts.jsx');
   const singlePostPage = path.resolve('./src/templates/Post.jsx');
 
-  const posts = results?.data?.contents;
+  const posts = results?.data?.contents?.map((post) =>
+    Web3Utils.isHex(post.content)
+      ? {
+          ...post,
+          content: Web3Utils.hexToUtf8(post.content),
+        }
+      : post,
+  );
   if (posts) {
     createPage({ path: `posts`, component: postsPage, context: { posts } });
-
     posts.forEach((post) => {
       createPage({
         path: `post/${post.id}`,

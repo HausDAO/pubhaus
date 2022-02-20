@@ -1,10 +1,8 @@
-import React from 'react'
+import React from 'react';
 
-const Post = ({pageContext}) => {
+const Post = ({ pageContext }) => {
+  console.log('pageContext.post.content', pageContext.post.content);
+  return <div>{pageContext?.post?.title}</div>;
+};
 
-  return (
-    <div>{pageContext?.post?.title}</div>
-  )
-}
-
-export default Post
+export default Post;
