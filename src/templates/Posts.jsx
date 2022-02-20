@@ -1,10 +1,18 @@
-import React from 'react'
+import { Link } from 'gatsby';
+import React from 'react';
 
-const Posts = ({pageContext}) => {
-  console.log('pageContext', pageContext)
+const Posts = ({ pageContext }) => {
+  const { posts } = pageContext;
+ 
   return (
-    <div>Posts</div>
-  )
-}
+    <div>
+      <ul>
+        {posts?.map((post) => (
+          <li key={post.key}><Link to={`/post/${post.id}`}>{post.title}</Link></li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-export default Posts
+export default Posts;
