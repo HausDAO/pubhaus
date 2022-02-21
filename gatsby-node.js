@@ -45,14 +45,15 @@ exports.createPages = async ({ actions }) => {
   const postsPage = path.resolve('./src/templates/Posts.jsx');
   const singlePostPage = path.resolve('./src/templates/Post.jsx');
 
-  const posts = results?.data?.contents?.map((post) =>
-    Web3Utils.isHex(post.content)
-      ? {
-          ...post,
-          content: Web3Utils.hexToUtf8(post.content),
-        }
-      : post,
-  );
+  const posts = results?.data?.contents?.map((post) => {
+    const decodedContent = Web3Utils.isHex(post.content)
+      ? Web3Utils.hexToUtf8(post.content)
+      : post.content;
+    return {
+      ...post,
+      content: decodedContent,
+    };
+  });
   if (posts) {
     createPage({ path: `posts`, component: postsPage, context: { posts } });
     posts.forEach((post) => {
