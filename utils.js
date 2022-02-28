@@ -1,4 +1,5 @@
 const Web3Utils = require('web3-utils');
+const fetch = require('cross-fetch');
 
 const POSTER_TAGS = {
   MINION: 'daohaus.document.minion',
@@ -21,7 +22,7 @@ const isIPFS = (doc) => IPFS_TYPES.includes(doc?.contentType);
 const isEncoded = (doc) => doc?.contentType === CONTENT_TYPES.ON_CHAIN;
 const isRatified = (doc) => doc?.ratified;
 
-export const getIPFSPinata = async ({ hash }) => {
+const getIPFSPinata = async ({ hash }) => {
   const url = `https://daohaus.mypinata.cloud/ipfs/${hash}`;
   try {
     const res = await fetch(url);
@@ -63,4 +64,5 @@ module.exports = {
   isEncoded,
   isRatified,
   getDocContent,
+  getIPFSPinata,
 };

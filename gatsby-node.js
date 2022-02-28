@@ -51,7 +51,6 @@ exports.createPages = async ({ actions }) => {
   const posts = await Promise.all(
     rawDocs.map(async (doc) => await getDocContent(doc)),
   );
-  console.log('posts', posts);
   if (posts) {
     createPage({ path: `posts`, component: postsPage, context: { posts } });
     posts.forEach((post) => {
